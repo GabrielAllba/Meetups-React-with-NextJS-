@@ -1,5 +1,6 @@
 // ourd-domain.com/
 
+import Layout from "components/layout/Layout";
 import { Fragment } from "react"
 import MeetupList from "components/meetups/MeetupList"
 
@@ -21,9 +22,6 @@ const DUMMY_MEETUPS = [
 ];
 
 function HomePage(){
-    return <Fragment>
-        <h1>Home Page</h1>
-        <MeetupList meetups={DUMMY_MEETUPS}></MeetupList>
-    </Fragment>
+    return<MeetupList meetups={DUMMY_MEETUPS}></MeetupList>
 }
 export default HomePage
