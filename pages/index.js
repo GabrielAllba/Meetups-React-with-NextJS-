@@ -3,6 +3,7 @@ import { MongoClient } from "mongodb";
 import Layout from "components/layout/Layout";
 // import { Fragment, useEffect, useState } from "react"
 import MeetupList from "components/meetups/MeetupList"
+import Head from "next/head";
 
 const DUMMY_MEETUPS = [
   {
@@ -31,36 +32,17 @@ function HomePage(props){
   
 
     return <>
+      <Head>
+        <title>React Meetups</title>
+        <meta name="description" content='Browse a huge list of highly active react meetups'></meta>
+      </Head>
       <MeetupList meetups={props.meetups}></MeetupList>;
     </>
 }
-// export async function getStaticProps(){
-//   // fetch data from an API
+export async function getStaticProps(){
+  // fetch data from an API
   
-//   const client = await MongoClient.connect(
-//     "mongodb+srv://rielgbrl:dsVW0YsJUKxYI6fD@cluster0.4j6wns2.mongodb.net/?retryWrites=true&w=majority"
-//   );
-
-//   const db = client.db();
-
-//   const meetupsCollection = db.collection("meetups");
-//   const meetups = await meetupsCollection.find().toArray()
-//   client.close()
-
-//   return{
-//     props: {
-//       meetups: meetups.map(meetup => ({
-//         title: meetup.title,
-//         address: meetup.address,
-//         image: meetup.image,
-//         id: meetup._id.toString()
-//       }))
-//     },
-//     revalidate: 1
-//   }
-// }
-export async function getServerSideProps(context){
-   const client = await MongoClient.connect(
+  const client = await MongoClient.connect(
     "mongodb+srv://rielgbrl:dsVW0YsJUKxYI6fD@cluster0.4j6wns2.mongodb.net/?retryWrites=true&w=majority"
   );
 
@@ -79,8 +61,31 @@ export async function getServerSideProps(context){
         id: meetup._id.toString()
       }))
     },
-    
+    revalidate: 1
   }
 }
+// export async function getServerSideProps(context){
+//    const client = await MongoClient.connect(
+//     "mongodb+srv://rielgbrl:dsVW0YsJUKxYI6fD@cluster0.4j6wns2.mongodb.net/?retryWrites=true&w=majority"
+//   );
+
+//   const db = client.db();
+
+//   const meetupsCollection = db.collection("meetups");
+//   const meetups = await meetupsCollection.find().toArray()
+//   client.close()
+
+//   return{
+//     props: {
+//       meetups: meetups.map(meetup => ({
+//         title: meetup.title,
+//         address: meetup.address,
+//         image: meetup.image,
+//         id: meetup._id.toString()
+//       }))
+//     },
+    
+//   }
+// }
 
 export default HomePage
