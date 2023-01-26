@@ -1,7 +1,7 @@
 // ourd-domain.com/
 
 import Layout from "components/layout/Layout";
-import { Fragment } from "react"
+// import { Fragment, useEffect, useState } from "react"
 import MeetupList from "components/meetups/MeetupList"
 
 const DUMMY_MEETUPS = [
@@ -21,7 +21,35 @@ const DUMMY_MEETUPS = [
   },
 ];
 
-function HomePage(){
-    return<MeetupList meetups={DUMMY_MEETUPS}></MeetupList>
+function HomePage(props){
+  // const [loadedMeetups, setLoadedMeetups] = useState([])
+
+  // useEffect(() => {
+  //   setLoadedMeetups(DUMMY_MEETUPS)
+  // },  [])
+  // console.log(loadedMeetups)
+
+    return <MeetupList meetups={props.meetups}></MeetupList>;
 }
+export async function getStaticProps(){
+  // fetch data from an API
+  return{
+    props: {
+      meetups: DUMMY_MEETUPS
+    },
+    revalidate: 1
+  }
+}
+// export async function getServerSideProps(context){
+//   const req = context.req
+//   const res = context.res
+  
+//   // fetch data from an API
+//   return {
+//     props: {
+//       meetups: DUMMY_MEETUPS
+//     }
+//   }
+// }
+
 export default HomePage
