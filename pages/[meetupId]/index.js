@@ -1,20 +1,49 @@
 import { Fragment } from "react"
 import MeetupDetail from "components/meetups/MeetupDetail";
-function MeetupDetails(){
-    return <>
-        <h1>test</h1>
-         <MeetupDetail 
-            image="https://images.unsplash.com/photo-1661961112835-ca6f5811d2af?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80" 
-            title='First Meetups' 
-            address='Some Address' 
-            description='desc'>
-        </MeetupDetail>
-    </>
+import { useRouter } from "next/router";
+function MeetupDetails(props){
+    return (
+      <>
+        <h1>{props.meetUpData.id}</h1>
+        <MeetupDetail
+          image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1280px-Image_created_with_a_mobile_phone.png"
+          title="Wikipedia meetup"
+          address="Wikipedia address"
+          description={props.meetUpData.description}
+        ></MeetupDetail>
+      </>
+    );
     
 }
+export async function getStaticPaths(){
+    return {
+        fallback: false,
+        paths: [
+            {params: {
+                meetupId: 'm1'
+            }},
+            {params: {
+                meetupId: 'm2'
+            }}
+        ]
+    }
+}
 
-export async function getStaticProps(){
+export async function getStaticProps(context){
     // fetch data for a single meetup
+    const meetupId = context.params.meetupId
+    
+    return {
+        props: {
+            meetUpData: {
+                image:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1280px-Image_created_with_a_mobile_phone.png',
+                id: meetupId,
+                title: 'Wikipedia Meetup',
+                address: 'Wikipedia addres',
+                description:'wikipedia description'
+            }
+        }
+    }
 }
 
 export default MeetupDetails
